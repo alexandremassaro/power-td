@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://crmrqhynvpoxo"]
+
+[ext_resource type="Script" uid="uid://cavdyt2emckg4" path="res://scripts/camera_gimble.gd" id="1_3whnb"]
+
+[node name="CameraGimble" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.7071067, 0, -0.7071067, 0.7071067, 0, 0, 0)
+script = ExtResource("1_3whnb")
+
+[node name="Camera3D" type="Camera3D" parent="."]

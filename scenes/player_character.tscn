@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://hfsj4vsntw7e"]
+
+[ext_resource type="Script" uid="uid://i8xq0c2n5u5f" path="res://scripts/player_character.gd" id="1_6r27q"]
+[ext_resource type="Shader" uid="uid://d1gt314n88dk8" path="res://shaders/character.gdshader" id="1_56udc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ww3n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3p16f"]
+render_priority = 0
+shader = ExtResource("1_56udc")
+shader_parameter/base_color = Color(6.778373, 0, 6.848802, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_e6k12"]
+material = SubResource("ShaderMaterial_3p16f")
+
+[node name="PlayerCharacter" type="CharacterBody3D"]
+motion_mode = 1
+script = ExtResource("1_6r27q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_4ww3n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_e6k12")
