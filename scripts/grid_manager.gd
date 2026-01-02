@@ -4,6 +4,8 @@ extends Node3D
 @export var grid_size: Vector2i = Vector2i(50, 50)
 @export var cell_size: float = 1.0
 
+var grid_offset: Vector2 = Vector2.ZERO
+
 var grid_data : Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -23,18 +25,19 @@ func initialize_grid():
 
 
 func world_to_grid(world_position : Vector2) -> Vector2i:
+	var adjusted = world_position - grid_offset
 	var grid_position : Vector2i = Vector2i(
-			roundi(world_position.x / cell_size),
-			roundi(world_position.y / cell_size)
+			floori(adjusted.x / cell_size),
+			floori(adjusted.y / cell_size)
 		)
-	print(grid_position)
+
 	return grid_position
 
 
 func grid_to_world(grid_position: Vector2i) -> Vector2:
-	var world_position : Vector2 = Vector2.ZERO
-
-	world_position.x = grid_position.x * cell_size
-	world_position.y = grid_position.y * cell_size
+	var world_position : Vector2 = Vector2(
+			grid_position.x * cell_size + cell_size * 0.5,
+			grid_position.y * cell_size + cell_size * 0.5
+		)
 
 	return world_position

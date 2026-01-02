@@ -68,7 +68,7 @@ shape = SubResource("BoxShape3D_3nuxk")
 mesh = SubResource("QuadMesh_4ww3n")
 skeleton = NodePath("../..")
 
-[node name="GridNode" type="MeshInstance3D" parent="Floor"]
+[node name="HighlightMesh" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("QuadMesh_ejtyh")
 skeleton = NodePath("../..")
 

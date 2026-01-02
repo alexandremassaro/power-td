@@ -17,7 +17,7 @@ func _input_event(camera: Camera3D, event: InputEvent, event_position: Vector3, 
 		var grid_pos = grid_manager.world_to_grid(adjusted_position)
 		var world_pos = grid_manager.grid_to_world(grid_pos)
 
-		$GridNode.position = Vector3(world_pos.x, 0.001, world_pos.y)
+		get_node("HighlightMesh").position = Vector3(world_pos.x, 0.001, world_pos.y)
 
 func click_to_move(event_position: Vector3):
 	var destination : Vector2 = Vector2.ZERO
