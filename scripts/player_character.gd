@@ -9,11 +9,9 @@ var move_target = null
 
 
 func move_to(destination : Vector2):
-	print(destination)
-	var adjusted_target : Vector2 = grid_manager.world_to_grid(grid_manager.grid_to_world(destination))
-	print(adjusted_target)
-	move_target = Vector3(adjusted_target.x, 0.0, adjusted_target.y)
-	print(move_target)
+	var grid_pos = grid_manager.world_to_grid(destination)
+	var snapped_world = grid_manager.grid_to_world(grid_pos)
+	move_target = Vector3(snapped_world.x, 0.0, snapped_world.y)
 
 
 func _ready() -> void:

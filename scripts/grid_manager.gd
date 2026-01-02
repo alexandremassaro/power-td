@@ -23,11 +23,11 @@ func initialize_grid():
 
 
 func world_to_grid(world_position : Vector2) -> Vector2i:
-	var grid_position : Vector2i = Vector2i.ZERO
-
-	grid_position.x = floori(world_position.x / cell_size)
-	grid_position.y = floori(world_position.y / cell_size)
-
+	var grid_position : Vector2i = Vector2i(
+			roundi(world_position.x / cell_size),
+			roundi(world_position.y / cell_size)
+		)
+	print(grid_position)
 	return grid_position
 
 
