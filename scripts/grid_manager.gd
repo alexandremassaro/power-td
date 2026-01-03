@@ -10,6 +10,7 @@ var grid_data : Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	grid_offset = grid_size / 2
 	initialize_grid()
 
 
@@ -33,10 +34,10 @@ func initialize_grid():
 			# if grid has more than 1 row
 			if grid_size.y > 1:
 				# if point is not in first row
-				if id >= grid_size.x:
+				if not i == 0:
 					pathfinding.connect_points(id, id - grid_size.x)
 				# if point is not in last row
-				if id < grid_size.x * grid_size.y - grid_size.x:
+				if not i == grid_size.y - 1:
 					pathfinding.connect_points(id, id + grid_size.x)
 			# if grid has more than 1 column
 			if grid_size.x > 1:
@@ -52,12 +53,11 @@ func initialize_grid():
 
 
 func world_to_grid(world_position : Vector2) -> Vector2i:
-	var adjusted = world_position - grid_offset
+	var adjusted = world_position + grid_offset
 	var grid_position : Vector2i = Vector2i(
 			roundi(adjusted.x / cell_size),
 			roundi(adjusted.y / cell_size)
 		)
-
 	return grid_position
 
 
@@ -66,8 +66,8 @@ func grid_to_world(grid_position: Vector2i) -> Vector2:
 			grid_position.x * cell_size,
 			grid_position.y * cell_size
 		)
-
-	return world_position
+	
+	return world_position - grid_offset
 
 
 func calculate_path(from : Vector2i, to : Vector2i) -> PackedVector2Array:

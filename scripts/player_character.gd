@@ -32,7 +32,6 @@ func _physics_process(delta: float) -> void:
 			velocity.z = direction.z * SPEED
 		else:
 			move_target = path.pop_front()
-
 			if not move_target:
 				velocity.x = move_toward(velocity.x, 0, SPEED)
 				velocity.z = move_toward(velocity.z, 0, SPEED)
@@ -40,6 +39,8 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 	else:
 		move_target = path.pop_front()
+		# if move_target:
+		# 	print(move_target)
 
 
 func move_to(destination : Vector2i):
