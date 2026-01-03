@@ -14,7 +14,6 @@ func _ready() -> void:
 
 
 func initialize_grid():
-	var id = 0
 	for i in range(grid_size.x):
 		for j in range(grid_size.y):
 			var cell_pos = Vector2i(i, j)
@@ -25,12 +24,9 @@ func initialize_grid():
 				"has_building" = false,
 				}
 			# Adding point to pathfinding algorithm
-			pathfinding.add_point(id, Vector2(float(i), float(j)))
+			pathfinding.add_point(pathfinding.get_available_point_id(), Vector2(float(i), float(j)))
 
-			id += 1
-	
-	print(id)
-	id = 0
+	var id = 0
 	for i in range(grid_size.x):
 		for j in range(grid_size.y):
 			# Connecting neighbour points
@@ -74,3 +70,7 @@ func grid_to_world(grid_position: Vector2i) -> Vector2:
 	return world_position
 
 
+func calculate_path(from : Vector2i, to : Vector2i) -> PackedVector2Array:
+	var from_id = pathfinding.get_closest_point(Vector2(from))
+	var to_id = pathfinding.get_closest_point(Vector2(to))
+	return pathfinding.get_point_path(from_id, to_id)

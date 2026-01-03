@@ -12,7 +12,7 @@ var path : Array[Vector3] = []
 
 func _ready() -> void:
 	grid_manager = get_parent().get_node("GridManager") as GridManager
-	(get_parent().get_node("Floor") as Floor).move_to.connect(move_to)
+	(get_parent().get_node("Floor") as Floor).move_to.connect(calculate_path)
 
 
 func _physics_process(delta: float) -> void:
@@ -47,6 +47,10 @@ func move_to(destination : Vector2i):
 	path.push_back(Vector3(snapped_world.x, 0.0, snapped_world.y))
 
 
-func calculate_path(from : Vector2i, to : Vector2i):
-	pass
+func calculate_path(to : Vector2i):
+	path.clear()
+	var from = grid_manager.world_to_grid(Vector2(global_position.x, global_position.z))
+	var grid_path : PackedVector2Array = grid_manager.calculate_path(from, to)
+	for grid_position in grid_path:
+		move_to(Vector2i(grid_position))
 
