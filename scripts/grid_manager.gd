@@ -26,26 +26,32 @@ func initialize_grid():
 				}
 			# Adding point to pathfinding algorithm
 			pathfinding.add_point(id, Vector2(float(i), float(j)))
-		
+
+			id += 1
+	
+	print(id)
+	id = 0
+	for i in range(grid_size.x):
+		for j in range(grid_size.y):
 			# Connecting neighbour points
 			# if grid has more than 1 row
 			if grid_size.y > 1:
 				# if point is not in first row
-				if i > 0:
-					pathfinding.connect_points(id, id - grid_size)
+				if id >= grid_size.x:
+					pathfinding.connect_points(id, id - grid_size.x)
 				# if point is not in last row
-				if i < grid_size.y - 1:
-					pathfinding.connect_points(id, id + grid_size)
+				if id < grid_size.x * grid_size.y - grid_size.x:
+					pathfinding.connect_points(id, id + grid_size.x)
 			# if grid has more than 1 column
 			if grid_size.x > 1:
 				# if point is not in first column
-				# if id > 0 and not id % grid_size.x  == 0.0:
-				if j > 0:
-					pathfinding.connect_points(id, id + 1)
-				# if point is not in last column
-				# if id < grid_size.x * grid_size.y - 1 and not (id + 1) % grid_size.x == 0:
-				if j < grid_size.x - 1:
+				if not j == 0:
 					pathfinding.connect_points(id, id - 1)
+				# if point is not in last column
+				if not j == grid_size.x - 1:
+					pathfinding.connect_points(id, id + 1)
+
+
 			id += 1
 
 
