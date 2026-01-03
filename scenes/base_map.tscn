@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://hfsj4vsntw7e" path="res://scenes/player_character.tscn" id="5_e6k12"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3nuxk"]
-size = Vector3(50, 0, 50)
+size = Vector3(37, 0, 37)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o23v6"]
 render_priority = 0
@@ -17,7 +17,7 @@ shader_parameter/albedo_color = Color(0.29803923, 0.75686276, 0.24705882, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_4ww3n"]
 material = SubResource("ShaderMaterial_o23v6")
-size = Vector2(50, 50)
+size = Vector2(37, 37)
 orientation = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yv3mv"]
@@ -87,4 +87,3 @@ shadow_bias = 0.4
 shadow_normal_bias = 1.0
 
 [node name="PlayerCharacter" parent="." instance=ExtResource("5_e6k12")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -6,12 +6,7 @@ const JUMP_VELOCITY = 4.5
 
 @onready var grid_manager : GridManager
 var move_target = null
-
-
-func move_to(destination : Vector2):
-	var grid_pos = grid_manager.world_to_grid(destination)
-	var snapped_world = grid_manager.grid_to_world(grid_pos)
-	move_target = Vector3(snapped_world.x, 0.0, snapped_world.y)
+var path : Array[Vector3] = []
 
 
 func _ready() -> void:
@@ -31,14 +26,25 @@ func _physics_process(delta: float) -> void:
 		var direction = global_position.direction_to(move_target)
 		var distance = global_position.distance_to(move_target)
 
-		if direction and distance >= 1.0:
+		if direction and distance >= 0.1:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
 		else:
-			move_target = null
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			velocity.z = move_toward(velocity.z, 0, SPEED)
+			move_target = path.pop_front()
+
+			if not move_target:
+				velocity.x = move_toward(velocity.x, 0, SPEED)
+				velocity.z = move_toward(velocity.z, 0, SPEED)
 
 		move_and_slide()
+	else:
+		move_target = path.pop_front()
+
+
+func move_to(destination : Vector2):
+	var grid_pos = grid_manager.world_to_grid(destination)
+	var snapped_world = grid_manager.grid_to_world(grid_pos)
+	path.push_back(Vector3(snapped_world.x, 0.0, snapped_world.y))
+	# move_target = Vector3(snapped_world.x, 0.0, snapped_world.y)
 
 
