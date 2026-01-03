@@ -13,20 +13,22 @@ size = Vector3(37, 0, 37)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o23v6"]
 render_priority = 0
 shader = ExtResource("1_3nuxk")
-shader_parameter/albedo_color = Color(0.29803923, 0.75686276, 0.24705882, 1)
+shader_parameter/color1 = Color(0.3102699, 0.9999996, 0.5543926, 1)
+shader_parameter/color2 = Color(0, 0.54901963, 0.3647059, 1)
+shader_parameter/grid_width = 37
+shader_parameter/grid_height = 37
 
 [sub_resource type="QuadMesh" id="QuadMesh_4ww3n"]
+lightmap_size_hint = Vector2i(187, 187)
 material = SubResource("ShaderMaterial_o23v6")
 size = Vector2(37, 37)
 orientation = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yv3mv"]
-render_priority = 0
-shader = ExtResource("1_3nuxk")
-shader_parameter/albedo_color = Color(0.12833649, 0.33872536, 0.10488608, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yv3mv"]
+albedo_color = Color(1, 0.21568628, 0, 0.6901961)
 
 [sub_resource type="QuadMesh" id="QuadMesh_ejtyh"]
-material = SubResource("ShaderMaterial_yv3mv")
+material = SubResource("StandardMaterial3D_yv3mv")
 center_offset = Vector3(0, 0.001, 0)
 orientation = 1
 
@@ -65,10 +67,12 @@ script = ExtResource("2_e6k12")
 shape = SubResource("BoxShape3D_3nuxk")
 
 [node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.010665894, 0.022812843, -0.014680624)
 mesh = SubResource("QuadMesh_4ww3n")
 skeleton = NodePath("../..")
 
 [node name="HighlightMesh" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
 mesh = SubResource("QuadMesh_ejtyh")
 skeleton = NodePath("../..")
 
