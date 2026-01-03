@@ -5,6 +5,7 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 @onready var grid_manager : GridManager
+@onready var a_star : AStar2D = AStar2D.new()
 var move_target = null
 var path : Array[Vector3] = []
 
@@ -41,10 +42,11 @@ func _physics_process(delta: float) -> void:
 		move_target = path.pop_front()
 
 
-func move_to(destination : Vector2):
-	var grid_pos = grid_manager.world_to_grid(destination)
-	var snapped_world = grid_manager.grid_to_world(grid_pos)
+func move_to(destination : Vector2i):
+	var snapped_world = grid_manager.grid_to_world(destination)
 	path.push_back(Vector3(snapped_world.x, 0.0, snapped_world.y))
-	# move_target = Vector3(snapped_world.x, 0.0, snapped_world.y)
 
+
+func calculate_path(from : Vector2i, to : Vector2i):
+	pass
 
