@@ -50,8 +50,8 @@ func initialize_grid():
 func world_to_grid(world_position : Vector2) -> Vector2i:
 	var adjusted = world_position + grid_offset
 	var grid_position : Vector2i = Vector2i(
-			roundi(adjusted.x / cell_size),
-			roundi(adjusted.y / cell_size)
+			floori(adjusted.x / cell_size),
+			floori(adjusted.y / cell_size)
 		)
 	return grid_position
 
@@ -61,28 +61,25 @@ func world_3d_to_grid(world_position : Vector3) -> Vector2i:
 	adjusted.x += grid_offset.x
 	adjusted.z += grid_offset.y
 	var grid_position : Vector2i = Vector2i(
-			roundi(adjusted.x / cell_size),
-			roundi(adjusted.z / cell_size)
+			floori(adjusted.x / cell_size),
+			floori(adjusted.z / cell_size)
 		)
 	return grid_position
 
 
 func grid_to_world(grid_position: Vector2i) -> Vector2:
 	var world_position : Vector2 = Vector2(
-			grid_position.x * cell_size,
-			grid_position.y * cell_size
-		)
-	
+		grid_position.x * cell_size + cell_size * 0.5,
+		grid_position.y * cell_size + cell_size * 0.5
+	)
 	return world_position - grid_offset
-
 
 func grid_to_world_3d(grid_position: Vector2i) -> Vector3:
 	var world_position : Vector3 = Vector3(
-			grid_position.x * cell_size - grid_offset.x,
-			0.0,
-			grid_position.y * cell_size - grid_offset.y
-		)
-	
+		grid_position.x * cell_size + cell_size * 0.5 - grid_offset.x,
+		0.0,
+		grid_position.y * cell_size + cell_size * 0.5 - grid_offset.y
+	)
 	return world_position
 
 
