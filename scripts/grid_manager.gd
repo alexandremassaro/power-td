@@ -114,15 +114,20 @@ func place_structure(structure : Structure, grid_position : Vector2i):
 	structure.global_position = world_position
 
 	grid_data[grid_position].place_structure(structure)
-	_pathfind_dirty = true
+
+	if not structure.can_walk_accros:
+		var point_id = grid_position.x * grid_size.y + grid_position.y
+		pathfinding.set_point_disabled(point_id, true)
 
 
 func remove_structure(grid_position: Vector2i):
 	if not grid_data.has(grid_position):
 		return
 
+	var point_id = grid_position.x * grid_size.y + grid_position.y
+	pathfinding.set_point_disabled(point_id, false)
+
 	grid_data[grid_position].remove_structure()
-	_pathfind_dirty = true
 
 
 func is_cell_walkable(grid_position: Vector2i) -> bool:

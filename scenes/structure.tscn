@@ -5,6 +5,8 @@
 [ext_resource type="Shape3D" uid="uid://ph2oryyxeoxg" path="res://resources/shapes/placeholder_structure_shape.tres" id="3_u8bn0"]
 
 [node name="Structure" type="StaticBody3D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_cjacc")
 mesh = ExtResource("2_8t6i7")
 hitbox = ExtResource("3_u8bn0")

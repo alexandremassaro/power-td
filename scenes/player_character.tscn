@@ -14,6 +14,8 @@ shader_parameter/base_color = Color(6.778373, 0, 6.848802, 1)
 material = SubResource("ShaderMaterial_3p16f")
 
 [node name="PlayerCharacter" type="CharacterBody3D"]
+collision_layer = 0
+collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_6r27q")
 

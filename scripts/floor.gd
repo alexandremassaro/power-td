@@ -40,7 +40,7 @@ func click_to_move(event_position: Vector3):
 
 func place_structure(event_position: Vector3):
 	var structure_position : Vector2i = grid_manager.world_3d_to_grid(event_position)
-	var structure : Structure = Structure.new()
+	var structure : Structure = Scenes.STRUCTURE_SCENE.instantiate() as Structure
 	
 	grid_manager.place_structure(structure, structure_position)
 
