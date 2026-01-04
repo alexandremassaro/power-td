@@ -8,6 +8,8 @@ var grid_offset : Vector2 = Vector2.ZERO
 var pathfinding : AStar2D = AStar2D.new()
 var grid_data : Dictionary = {}
 
+var _pathfind_dirty : bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	grid_offset = grid_size / 2
@@ -19,11 +21,7 @@ func initialize_grid():
 		for j in range(grid_size.y):
 			var cell_pos = Vector2i(i, j)
 			# Setting grid data
-			grid_data[cell_pos] = {
-				"occupied" = false,
-				"wallkable" = true,
-				"has_building" = false,
-				}
+			grid_data[cell_pos] = GridCell.new()
 			# Adding point to pathfinding algorithm
 			pathfinding.add_point(pathfinding.get_available_point_id(), Vector2(float(i), float(j)))
 
@@ -61,6 +59,17 @@ func world_to_grid(world_position : Vector2) -> Vector2i:
 	return grid_position
 
 
+func world_3d_to_grid(world_position : Vector3) -> Vector2i:
+	var adjusted = world_position
+	adjusted.x += grid_offset.x
+	adjusted.z += grid_offset.y
+	var grid_position : Vector2i = Vector2i(
+			roundi(adjusted.x / cell_size),
+			roundi(adjusted.z / cell_size)
+		)
+	return grid_position
+
+
 func grid_to_world(grid_position: Vector2i) -> Vector2:
 	var world_position : Vector2 = Vector2(
 			grid_position.x * cell_size,
@@ -70,7 +79,63 @@ func grid_to_world(grid_position: Vector2i) -> Vector2:
 	return world_position - grid_offset
 
 
+func grid_to_world_3d(grid_position: Vector2i) -> Vector3:
+	var world_position : Vector3 = Vector3(
+			grid_position.x * cell_size - grid_offset.x,
+			0.0,
+			grid_position.y * cell_size - grid_offset.y
+		)
+	
+	return world_position
+
+
 func calculate_path(from : Vector2i, to : Vector2i) -> PackedVector2Array:
 	var from_id = pathfinding.get_closest_point(Vector2(from))
 	var to_id = pathfinding.get_closest_point(Vector2(to))
 	return pathfinding.get_point_path(from_id, to_id)
+
+
+func get_grid_cell(grid_position : Vector2i) -> Object:
+	return grid_data[grid_position]
+
+
+func can_place_structure(grid_position : Vector2i) -> bool:
+	if not grid_data.has(grid_position):
+		return false
+	return grid_data[grid_position].can_place_structure()
+
+
+func place_structure(structure : Structure, grid_position : Vector2i):
+	if not can_place_structure(grid_position):
+		return
+
+	var world_position = grid_to_world_3d(grid_position)
+	add_child(structure)
+	structure.global_position = world_position
+
+	grid_data[grid_position].place_structure(structure)
+	_pathfind_dirty = true
+
+
+func remove_structure(grid_position: Vector2i):
+	if not grid_data.has(grid_position):
+		return
+
+	grid_data[grid_position].remove_structure()
+	_pathfind_dirty = true
+
+
+func is_cell_walkable(grid_position: Vector2i) -> bool:
+	if not grid_data.has(grid_position):
+		return false
+
+	return grid_data[grid_position].can_walk
+
+
+func get_structure_at(grid_position: Vector2i) -> Structure:
+	if grid_data.has(grid_position):
+		return grid_data[grid_position].structure
+	return null
+
+
+

@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://cl0tx08sqcb70"]
+
+[ext_resource type="Script" uid="uid://cetm5ue7ce1y8" path="res://scripts/structure.gd" id="1_cjacc"]
+[ext_resource type="CylinderMesh" uid="uid://bykg7q11p8y0b" path="res://resources/meshes/placeholder_structure_mesh.tres" id="2_8t6i7"]
+[ext_resource type="Shape3D" uid="uid://ph2oryyxeoxg" path="res://resources/shapes/placeholder_structure_shape.tres" id="3_u8bn0"]
+
+[node name="Structure" type="StaticBody3D"]
+script = ExtResource("1_cjacc")
+mesh = ExtResource("2_8t6i7")
+hitbox = ExtResource("3_u8bn0")

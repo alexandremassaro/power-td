@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm3kj701jeqnr"]
+
+[ext_resource type="PackedScene" uid="uid://cl0tx08sqcb70" path="res://scenes/structure.tscn" id="1_475t6"]
+
+[node name="Boulder" instance=ExtResource("1_475t6")]
+collision_layer = 0
+collision_mask = 0
