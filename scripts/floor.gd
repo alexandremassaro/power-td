@@ -11,7 +11,7 @@ func _ready() -> void:
 	grid_manager = get_parent().get_node("GridManager") as GridManager
 
 
-func _input_event(camera: Camera3D, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+func _input_event(_camera: Camera3D, event: InputEvent, event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		if event.is_action_released("click_to_move"):
 			click_to_move(event_position)
@@ -41,6 +41,8 @@ func click_to_move(event_position: Vector3):
 func place_structure(event_position: Vector3):
 	var structure_position : Vector2i = grid_manager.world_3d_to_grid(event_position)
 	var structure : Structure = Scenes.STRUCTURE_SCENE.instantiate() as Structure
+
+	print(structure_position)
 	
 	grid_manager.place_structure(structure, structure_position)
 

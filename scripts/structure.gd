@@ -11,7 +11,6 @@ extends StaticBody3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("Preparing Structure")
 	structure_hitbox = CollisionShape3D.new()
 	structure_mesh = MeshInstance3D.new()
 

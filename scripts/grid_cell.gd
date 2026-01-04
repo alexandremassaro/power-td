@@ -28,6 +28,8 @@ func place_structure(new_structure: Structure) -> void:
 		structure = new_structure
 		can_walk = structure.can_walk_accros
 		can_fly = structure.can_fly_over
+	else:
+		print("Can't place structure")
 
 
 func remove_structure() -> void:

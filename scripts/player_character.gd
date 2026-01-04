@@ -39,8 +39,6 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 	else:
 		move_target = path.pop_front()
-		# if move_target:
-		# 	print(move_target)
 
 
 func move_to(destination : Vector2i):

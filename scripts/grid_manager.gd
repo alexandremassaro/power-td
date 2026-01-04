@@ -1,22 +1,19 @@
 class_name GridManager
 extends Node3D
 
-@export var grid_size : Vector2i = Vector2i(37, 37)
-@export var cell_size : float = 1.0
+var grid_size : Vector2i
+var cell_size : float
 
 var grid_offset : Vector2 = Vector2.ZERO
 var pathfinding : AStar2D = AStar2D.new()
 var grid_data : Dictionary = {}
 
-var _pathfind_dirty : bool = false
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	grid_offset = grid_size / 2
-	initialize_grid()
-
 
 func initialize_grid():
+	grid_offset = grid_size * cell_size / 2
+	print("Grid Size:" + str(grid_size))
+	print("Cell size: " + str(cell_size))
+	print("Grid offset: " + str(grid_offset))
 	for i in range(grid_size.x):
 		for j in range(grid_size.y):
 			var cell_pos = Vector2i(i, j)
