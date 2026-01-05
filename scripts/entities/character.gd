@@ -4,6 +4,7 @@ const SPEED = 5.0
 
 @onready var grid_manager : GridManager
 @onready var selectable: SelectableComponent = get_node("SelectableComponent")
+@onready var pathfinding: PathfindingComponent = get_node("PathfindingComponent")
 
 var path : Array[Vector3] = []
 var current_path_index : int = 0
@@ -11,33 +12,22 @@ var current_path_index : int = 0
 
 func _ready() -> void:
 	grid_manager = get_parent().get_node("GridManager") as GridManager
-	(get_parent().get_node("Floor") as Floor).move_to.connect(calculate_path)
+	(get_parent().get_node("Floor") as Floor).move_to.connect(_on_move_command)
 
 	if selectable:
 		selectable.selected.connect(_on_selected)
 		selectable.deselected.connect(_on_deselected)
 
 
-func _physics_process(_delta: float) -> void:
-	if path.is_empty() or current_path_index >= path.size():
-		velocity = Vector3.ZERO
-		return
-	
-	var target = path[current_path_index]
-	var direction = global_position.direction_to(target)
-	var distance = global_position.distance_to(target)
-	
-	if distance > 0.1:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		current_path_index += 1
-		if current_path_index >= path.size():
-			velocity = Vector3.ZERO
-			path.clear()
-			current_path_index = 0
-	
-	move_and_slide()
+func _physics_process(delta: float) -> void:
+	if pathfinding.is_moving:
+		velocity = pathfinding.process_movement(delta)
+		velocity.y = 0
+		move_and_slide()
+
+
+func _on_move_command(target: Vector2i):
+	pathfinding.move_to(target)
 
 
 func _on_selected():
@@ -46,22 +36,6 @@ func _on_selected():
 
 func _on_deselected():
 	print("Character deselected: ", name)
-
-
-func calculate_path(to : Vector2i):
-	if not selectable.is_selected:
-		return
-	path.clear()
-	current_path_index = 0
-	
-	var from = grid_manager.world_to_grid(Vector2(global_position.x, global_position.z))
-	var grid_path : PackedVector2Array = grid_manager.calculate_path(from, to)
-	
-	var smoothed = smooth_path_with_line_of_sight(grid_path)
-	
-	for grid_pos in smoothed:
-		var world_pos = grid_manager.grid_to_world(Vector2i(grid_pos))
-		path.push_back(Vector3(world_pos.x, 0.0, world_pos.y))
 
 
 func smooth_path_with_line_of_sight(grid_path: PackedVector2Array) -> Array[Vector2i]:

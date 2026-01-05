@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://hfsj4vsntw7e"]
+[gd_scene load_steps=8 format=3 uid="uid://hfsj4vsntw7e"]
 
 [ext_resource type="Script" uid="uid://i8xq0c2n5u5f" path="res://scripts/entities/character.gd" id="1_lrhn5"]
 [ext_resource type="Shader" uid="uid://d1gt314n88dk8" path="res://shaders/character.gdshader" id="2_my7n2"]
 [ext_resource type="Script" uid="uid://bho1hgav1x4wl" path="res://scripts/components/selectable_component.gd" id="3_dp8ca"]
+[ext_resource type="Script" uid="uid://bvttacpvfemqf" path="res://scripts/components/pathfinding_component.gd" id="4_my7n2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ww3n"]
 
@@ -30,3 +31,7 @@ mesh = SubResource("CapsuleMesh_e6k12")
 [node name="SelectableComponent" type="Node" parent="."]
 script = ExtResource("3_dp8ca")
 metadata/_custom_type_script = "uid://bho1hgav1x4wl"
+
+[node name="PathfindingComponent" type="Node" parent="."]
+script = ExtResource("4_my7n2")
+metadata/_custom_type_script = "uid://bvttacpvfemqf"
