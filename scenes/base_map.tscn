@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bqfpy7m8bp5eb" path="res://scripts/base_map.gd" id="1_yv3mv"]
 [ext_resource type="PackedScene" uid="uid://crmrqhynvpoxo" path="res://scenes/camera_gimble.tscn" id="2_4ww3n"]
 [ext_resource type="Script" uid="uid://da8cskjg11dt5" path="res://scripts/floor.gd" id="2_e6k12"]
-[ext_resource type="PackedScene" uid="uid://hfsj4vsntw7e" path="res://scenes/player_character.tscn" id="5_e6k12"]
+[ext_resource type="PackedScene" uid="uid://hfsj4vsntw7e" path="res://scenes/character.tscn" id="6_yv3mv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3nuxk"]
 size = Vector3(37, 0, 37)
@@ -91,4 +91,4 @@ shadow_enabled = true
 shadow_bias = 0.4
 shadow_normal_bias = 1.0
 
-[node name="PlayerCharacter" parent="." instance=ExtResource("5_e6k12")]
+[node name="Character" parent="." instance=ExtResource("6_yv3mv")]

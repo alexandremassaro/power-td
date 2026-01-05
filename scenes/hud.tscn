@@ -1,27 +1,36 @@
-[gd_scene format=3 uid="uid://6tqifghbfekf"]
+[gd_scene load_steps=2 format=3 uid="uid://6tqifghbfekf"]
+
+[ext_resource type="Script" uid="uid://ddklylwire1br" path="res://scripts/hud.gd" id="1_ahhtf"]
 
 [node name="Hud" type="CanvasLayer"]
+script = ExtResource("1_ahhtf")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchors_preset = 15
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -100.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
-layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.7
 
-[node name="Container" type="Control" parent="VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 5.0
 
-[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+text = "Construir"
+
+[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

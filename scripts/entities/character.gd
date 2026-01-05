@@ -3,12 +3,20 @@ extends CharacterBody3D
 const SPEED = 5.0
 
 @onready var grid_manager : GridManager
+@onready var selectable: SelectableComponent = get_node("SelectableComponent")
+
 var path : Array[Vector3] = []
 var current_path_index : int = 0
+
 
 func _ready() -> void:
 	grid_manager = get_parent().get_node("GridManager") as GridManager
 	(get_parent().get_node("Floor") as Floor).move_to.connect(calculate_path)
+
+	if selectable:
+		selectable.selected.connect(_on_selected)
+		selectable.deselected.connect(_on_deselected)
+
 
 func _physics_process(_delta: float) -> void:
 	if path.is_empty() or current_path_index >= path.size():
@@ -31,59 +39,63 @@ func _physics_process(_delta: float) -> void:
 	
 	move_and_slide()
 
+
+func _on_selected():
+	print("Character selected: ", name)
+
+
+func _on_deselected():
+	print("Character deselected: ", name)
+
+
 func calculate_path(to : Vector2i):
+	if not selectable.is_selected:
+		return
 	path.clear()
 	current_path_index = 0
 	
 	var from = grid_manager.world_to_grid(Vector2(global_position.x, global_position.z))
 	var grid_path : PackedVector2Array = grid_manager.calculate_path(from, to)
 	
-	# SMOOTHING - remover waypoints desnecessários
 	var smoothed = smooth_path_with_line_of_sight(grid_path)
 	
 	for grid_pos in smoothed:
 		var world_pos = grid_manager.grid_to_world(Vector2i(grid_pos))
 		path.push_back(Vector3(world_pos.x, 0.0, world_pos.y))
 
-# Line of Sight Path Smoothing
+
 func smooth_path_with_line_of_sight(grid_path: PackedVector2Array) -> Array[Vector2i]:
 	if grid_path.size() <= 2:
 		return convert_to_vector2i_array(grid_path)
 	
 	var smoothed: Array[Vector2i] = []
-	smoothed.push_back(Vector2i(grid_path[0]))  # Adicionar início
+	smoothed.push_back(Vector2i(grid_path[0]))
 	
 	var current_index = 0
 	
 	while current_index < grid_path.size() - 1:
-		# Tentar ir o mais longe possível em linha reta
 		var farthest_visible = current_index + 1
 
 		for i in range(current_index + 2, grid_path.size()):
 			if has_line_of_sight(Vector2i(grid_path[current_index]), Vector2i(grid_path[i])):
 				farthest_visible = i
 			else:
-				break  # Não pode ver mais longe, parar
+				break
 
-		# Adicionar o ponto mais distante visível
 		smoothed.push_back(Vector2i(grid_path[farthest_visible]))
 		current_index = farthest_visible
 	
 	return smoothed
 
-# Verifica se há linha de visão entre dois pontos (sem obstáculos)
 func has_line_of_sight(from: Vector2i, to: Vector2i) -> bool:
-	# Algoritmo de Bresenham - traça linha entre dois pontos
 	var cells = get_line_cells(from, to)
 	
-	# Verificar se todas células na linha são walkable
 	for cell in cells:
 		if not grid_manager.is_cell_walkable(cell):
 			return false
 	
 	return true
 
-# Bresenham's Line Algorithm - retorna todas células em uma linha
 func get_line_cells(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	var cells: Array[Vector2i] = []
 	
@@ -114,7 +126,6 @@ func get_line_cells(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	
 	return cells
 
-# Helper para converter PackedVector2Array para Array[Vector2i]
 func convert_to_vector2i_array(packed: PackedVector2Array) -> Array[Vector2i]:
 	var result: Array[Vector2i] = []
 	for v in packed:

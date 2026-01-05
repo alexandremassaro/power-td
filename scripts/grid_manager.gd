@@ -11,15 +11,10 @@ var grid_data : Dictionary = {}
 
 func initialize_grid():
 	grid_offset = grid_size * cell_size / 2
-	print("Grid Size:" + str(grid_size))
-	print("Cell size: " + str(cell_size))
-	print("Grid offset: " + str(grid_offset))
 	for i in range(grid_size.x):
 		for j in range(grid_size.y):
 			var cell_pos = Vector2i(i, j)
-			# Setting grid data
 			grid_data[cell_pos] = GridCell.new()
-			# Adding point to pathfinding algorithm
 			pathfinding.add_point(pathfinding.get_available_point_id(), Vector2(float(i), float(j)))
 
 	var id = 0

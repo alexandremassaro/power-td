@@ -1,23 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://hfsj4vsntw7e"]
+[gd_scene load_steps=7 format=3 uid="uid://hfsj4vsntw7e"]
 
-[ext_resource type="Script" uid="uid://i8xq0c2n5u5f" path="res://scripts/player_character.gd" id="1_6r27q"]
-[ext_resource type="Shader" uid="uid://d1gt314n88dk8" path="res://shaders/character.gdshader" id="1_56udc"]
+[ext_resource type="Script" uid="uid://i8xq0c2n5u5f" path="res://scripts/entities/character.gd" id="1_lrhn5"]
+[ext_resource type="Shader" uid="uid://d1gt314n88dk8" path="res://shaders/character.gdshader" id="2_my7n2"]
+[ext_resource type="Script" uid="uid://bho1hgav1x4wl" path="res://scripts/components/selectable_component.gd" id="3_dp8ca"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ww3n"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3p16f"]
 render_priority = 0
-shader = ExtResource("1_56udc")
+shader = ExtResource("2_my7n2")
 shader_parameter/base_color = Color(6.778373, 0, 6.848802, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_e6k12"]
 material = SubResource("ShaderMaterial_3p16f")
 
-[node name="PlayerCharacter" type="CharacterBody3D"]
-collision_layer = 0
+[node name="Character" type="CharacterBody3D"]
 collision_mask = 0
 motion_mode = 1
-script = ExtResource("1_6r27q")
+script = ExtResource("1_lrhn5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -26,3 +26,7 @@ shape = SubResource("CapsuleShape3D_4ww3n")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_e6k12")
+
+[node name="SelectableComponent" type="Node" parent="."]
+script = ExtResource("3_dp8ca")
+metadata/_custom_type_script = "uid://bho1hgav1x4wl"

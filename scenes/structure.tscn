@@ -1,12 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://cl0tx08sqcb70"]
+[gd_scene load_steps=5 format=3 uid="uid://cl0tx08sqcb70"]
 
-[ext_resource type="Script" uid="uid://cetm5ue7ce1y8" path="res://scripts/structure.gd" id="1_cjacc"]
+[ext_resource type="Script" uid="uid://cetm5ue7ce1y8" path="res://scripts/entities/structure.gd" id="1_cjacc"]
 [ext_resource type="CylinderMesh" uid="uid://bykg7q11p8y0b" path="res://resources/meshes/placeholder_structure_mesh.tres" id="2_8t6i7"]
 [ext_resource type="Shape3D" uid="uid://ph2oryyxeoxg" path="res://resources/shapes/placeholder_structure_shape.tres" id="3_u8bn0"]
+[ext_resource type="Script" uid="uid://bho1hgav1x4wl" path="res://scripts/components/selectable_component.gd" id="4_dc8ix"]
 
 [node name="Structure" type="StaticBody3D"]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_cjacc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = ExtResource("3_u8bn0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = ExtResource("2_8t6i7")
-hitbox = ExtResource("3_u8bn0")
+
+[node name="SelectableComponent" type="Node" parent="."]
+script = ExtResource("4_dc8ix")
+metadata/_custom_type_script = "uid://bho1hgav1x4wl"
