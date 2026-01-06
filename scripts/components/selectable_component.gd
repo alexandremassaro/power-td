@@ -1,9 +1,8 @@
 class_name SelectableComponent
 extends Node
 
-
-signal selected
-signal deselected
+signal selected()
+signal deselected()
 
 var is_selected: bool = false
 @onready var parent_entity: CollisionObject3D = get_parent()
@@ -15,6 +14,9 @@ func _ready() -> void:
 
 		if parent_entity.has_signal("input_event"):
 			parent_entity.input_event.connect(_on_input_event)
+
+	selected.connect(EntitySelectionManager.on_entity_selected.bind(parent_entity))
+	deselected.connect(EntitySelectionManager.on_entity_deselected.bind(parent_entity))
 
 
 func _on_input_event(_camera: Camera3D, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:

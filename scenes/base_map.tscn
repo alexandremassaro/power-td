@@ -1,11 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://675eneogwoe1"]
+[gd_scene load_steps=16 format=3 uid="uid://675eneogwoe1"]
 
 [ext_resource type="Shader" uid="uid://cfc0le7wi6ka0" path="res://shaders/base_floor.gdshader" id="1_3nuxk"]
 [ext_resource type="Script" uid="uid://cnopg0jcbgoo1" path="res://scripts/grid_manager.gd" id="1_3p16f"]
 [ext_resource type="Script" uid="uid://bqfpy7m8bp5eb" path="res://scripts/base_map.gd" id="1_yv3mv"]
 [ext_resource type="PackedScene" uid="uid://crmrqhynvpoxo" path="res://scenes/camera_gimble.tscn" id="2_4ww3n"]
 [ext_resource type="Script" uid="uid://da8cskjg11dt5" path="res://scripts/floor.gd" id="2_e6k12"]
-[ext_resource type="PackedScene" uid="uid://hfsj4vsntw7e" path="res://scenes/character.tscn" id="6_yv3mv"]
+[ext_resource type="PackedScene" uid="uid://6tqifghbfekf" path="res://scenes/hud.tscn" id="7_ejtyh"]
+[ext_resource type="PackedScene" uid="uid://dykftdl0qjlcl" path="res://entities/characters/player_character/player_character.tscn" id="7_h5daw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3nuxk"]
 size = Vector3(37, 0, 37)
@@ -55,7 +56,6 @@ glow_hdr_threshold = 0.8
 
 [node name="BaseMap" type="Node3D"]
 script = ExtResource("1_yv3mv")
-cell_size = 3.0
 
 [node name="GridManager" type="Node3D" parent="."]
 script = ExtResource("1_3p16f")
@@ -91,4 +91,12 @@ shadow_enabled = true
 shadow_bias = 0.4
 shadow_normal_bias = 1.0
 
-[node name="Character" parent="." instance=ExtResource("6_yv3mv")]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Hud" parent="Control" instance=ExtResource("7_ejtyh")]
+
+[node name="PlayerCharacter" parent="." instance=ExtResource("7_h5daw")]

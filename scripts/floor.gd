@@ -10,6 +10,7 @@ signal move_to(destination: Vector2i)
 
 func _ready() -> void:
 	grid_manager = get_parent().get_node("GridManager") as GridManager
+	game_mode = get_parent().game_mode
 
 
 func _input_event(_camera: Camera3D, event: InputEvent, event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:

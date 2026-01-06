@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://c075ywcvr2dos"]
+
+[ext_resource type="PackedScene" uid="uid://hfsj4vsntw7e" path="res://entities/characters/character.tscn" id="1_mqr3i"]
+[ext_resource type="Script" uid="uid://dwb3yqb15ek45" path="res://entities/characters/mob/mob.gd" id="2_kkg1d"]
+
+[node name="Mob" instance=ExtResource("1_mqr3i")]
+script = ExtResource("2_kkg1d")

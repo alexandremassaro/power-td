@@ -15,8 +15,10 @@ func _ready() -> void:
 
 
 func _on_selected():
-	print("Structure selected: ", name)
+	# print("Structure selected: ", name)
+	pass
 
 
 func _on_deselected():
-	print("Structure deselected: ", name)
+	# print("Structure deselected: ", name)
+	pass

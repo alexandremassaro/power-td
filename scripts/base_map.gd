@@ -15,7 +15,6 @@ enum GameMode {NORMAL, SELECTED, BUILD, DESTROY}
 @onready var grid_floor : Floor = get_node("Floor")
 
 var game_mode : GameMode = GameMode.NORMAL
-var selected_structure : Structure = null
 
 
 # Called when the node enters the scene tree for the first time.
@@ -50,15 +49,17 @@ func _process(_delta: float) -> void:
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if event.is_action_released("build_mode") and game_mode == GameMode.NORMAL:
-		game_mode = GameMode.BUILD
-		game_mode_changed.emit(game_mode)
-	elif event.is_action_released("destroy_mode") and game_mode == GameMode.NORMAL:
-		game_mode = GameMode.DESTROY
-		game_mode_changed.emit(game_mode)
-	elif event.is_action_released("ui_cancel") and not game_mode == GameMode.NORMAL:
-		game_mode = GameMode.NORMAL
-		game_mode_changed.emit(game_mode)
+	# if event.is_action_released("build_mode") and game_mode == GameMode.NORMAL:
+	# 	game_mode = GameMode.BUILD
+	# 	game_mode_changed.emit(game_mode)
+	# if event.is_action_released("destroy_mode") and game_mode == GameMode.NORMAL:
+	# 	game_mode = GameMode.DESTROY
+	# 	game_mode_changed.emit(game_mode)
+	if event.is_action_released("ui_cancel"): # and not game_mode == GameMode.NORMAL:
+		print("Caiu")
+		# game_mode = GameMode.NORMAL
+		# game_mode_changed.emit(game_mode)
+		EntitySelectionManager.deselect_all()
 
 
 
