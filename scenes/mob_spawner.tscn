@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcth3mprfenpv"]
+
+[ext_resource type="Script" uid="uid://cyuk2yrciilr1" path="res://scripts/mob_spawner.gd" id="1_ljl1v"]
+
+[node name="MobSpawner" type="Marker3D"]
+script = ExtResource("1_ljl1v")
